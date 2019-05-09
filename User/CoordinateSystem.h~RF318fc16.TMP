@@ -1,0 +1,71 @@
+#ifndef __COORDINATESYSTEM_H
+#define __COORDINATESYSTEM_H
+#include "sys.h"
+#include "motor.h"
+
+typedef struct Point{
+	u8 x;
+	u8 y;
+} Point;
+
+typedef struct{
+	Point currentPoint;//当前坐标
+	Point terminalPoint;//终点坐标
+	u8 dir;//当前方向
+	u8 last_dir;
+	u8 dir_r;
+	float currentYaw;//当前偏航角
+	float rotatedYaw;//当前偏航角
+	bool isRotating;//是否正在旋转
+	bool isRun;//小车是否开跑
+	bool isRunAsyn;//是否开启直行模式
+	u16 speedA;//前进方向的左边的速度
+	u16 speedB;//前进方向右边的速度
+	u16 delayTimeAsyn;
+} MyCar;
+
+
+#define X true
+#define Y false
+
+#define CAR_STOP 0
+#define DIR_X_P 1 //X的正轴
+#define DIR_X_N 2 //X的负轴
+#define DIR_Y_P 3 //Y的正轴
+#define DIR_Y_N 4 //Y的负轴
+#define DIR_R_CW90 5 //顺时针旋转
+#define DIR_R_CCW90 6 //逆时针旋转
+#define DIR_R_CW180 7
+
+#define GRID_TIME_COF 200 //过了一个点后 下一条黑线被探测的时间 200 ms
+
+
+//原料区
+extern Point RawMaterialArea;
+//完成区
+extern Point FinishedAreaRed;
+extern Point FinishedAreaGreen;
+extern Point FinishedAreaBlue;
+//加工区
+extern Point ProcessingAeraRed;
+extern Point ProcessingAeraGreen;
+extern Point ProcessingAeraBlue;
+//二维码区
+extern Point QRCodeAera;
+//出发区
+extern Point initAera;
+extern Point initAeraEnd;
+
+
+extern float X_N_Yaw;
+extern float X_P_Yaw;
+extern float Y_N_Yaw;
+extern float Y_P_Yaw;
+
+
+
+void trackTest(u8 dir,u8 dir_last);
+
+
+
+#endif
